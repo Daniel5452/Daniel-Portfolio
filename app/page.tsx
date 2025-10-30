@@ -10,7 +10,7 @@ import {
 // ---------- CONFIGURABLE DATA ----------
 const META = {
   name: "Daniel Osman",
-  title: "Data Scientist & AI Engineer",
+  title: "AI Engineer & Business Development Strategist",
   tagline:
     "I turn messy data and ML models into real business impact. When I'm not training models, you'll find me watching UFC, playing football, or locked in on a new book.",
   about:
