@@ -1,213 +1,288 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { 
-  Mail, Linkedin, Github, FileText, Briefcase, BookOpen, Cpu, Globe, MapPin, Heart, Dumbbell, Book, Trophy, Sparkles, ArrowRight,
-  Database, BarChart3, Brain, Zap, Settings, TrendingUp, Search, MessageSquare, Eye, Truck, GitBranch
+import React from "react";
+import Image from "next/image";
+import { motion, useScroll, useTransform, type MotionProps, type Variants } from "framer-motion";
+import {
+  ArrowRight,
+  BarChart3,
+  Brain,
+  CheckCircle2,
+  Code2,
+  Database,
+  FileText,
+  Github,
+  GraduationCap,
+  Handshake,
+  Languages,
+  Linkedin,
+  Mail,
+  MapPin,
+  Presentation,
+  Search,
+  Settings,
+  Sparkles,
+  Target,
+  TrendingUp,
+  Users,
+  Zap,
 } from "lucide-react";
 
-// ---------- CONFIGURABLE DATA ----------
+// Place the referenced logo files inside /public.
 const META = {
   name: "Daniel Osman",
-  title: "AI Engineer & Business Development Strategist",
-  tagline:
-    "I turn messy data and ML models into real business impact. When I'm not training models, you'll find me watching UFC, playing football, or locked in on a new book.",
+  title: "Business Analytics & AI Strategy Analyst",
+  valueProposition:
+    "Using data, AI, and business intelligence to turn complex problems into clearer decisions and measurable business impact.",
   about:
-    "I'm a master's student with a strong passion for leveraging data, analytics, and emerging technologies to improve business performance. My focus is on connecting technical innovation with organizational strategy and transforming insights into opportunities for growth, efficiency, and measurable impact. I really enjoy learning in a continuous pattern and enjoy collaborating with teams to deliver meaningful results.",
+    "I enjoy working where data, technology, and business decisions meet. Most of my work has involved taking something complex — a large dataset, an unclear KPI movement, a repetitive process, or a technical model — and making it easier for people to understand and use. I am currently working in gaming analytics and AI at Tencent, after previously building an AI automation solution at VBTI that reduced operational costs by 75%. Long term, I want to keep moving toward business strategy, transformation, project evaluation, and executive decision support while keeping the technical skills that let me understand how the solutions actually work.",
   email: "danielosman5@gmail.com",
   phone: "+31 644799364",
-  location: "Amsterdam, NL — Jeddah, SA",
+  location: "Amsterdam, Netherlands — Jeddah, Saudi Arabia",
   linkedin: "https://www.linkedin.com/in/daniel-osman22",
   github: "https://github.com/Daniel5452",
   resumeUrl: "/Daniel-Resume.pdf",
+  photoUrl: "/daniel_photo.png",
 };
 
 const SKILLS = [
-  { name: "Python", icon: "🐍" },
-  { name: "R", icon: BarChart3 },
-  { name: "SQL (SQLite)", icon: Database },
-  { name: "Bash/Shell", icon: "💻" },
-  { name: "JavaScript", icon: "⚡" },
-  { name: "PyTorch", icon: Brain },
-  { name: "TensorFlow", icon: Brain },
-  { name: "scikit-learn", icon: Settings },
-  { name: "HuggingFace", icon: "🤗" },
-  { name: "LangChain", icon: "🔗" },
-  { name: "Pandas", icon: "🐼" },
-  { name: "NumPy", icon: "🔢" },
-  { name: "MongoDB (NoSQL)", icon: Database },
-  { name: "ETL Pipelines", icon: Settings },
-  { name: "API Development", icon: Zap },
-  { name: "Matplotlib", icon: TrendingUp },
-  { name: "Seaborn", icon: BarChart3 },
-  { name: "Plotly", icon: BarChart3 },
-  { name: "Streamlit", icon: Zap },
-  { name: "Dash", icon: BarChart3 },
-  { name: "Operations Research (Gurobi)", icon: Search },
-  { name: "Time Series Forecasting", icon: TrendingUp },
-  { name: "Predictive Modeling", icon: Brain },
-  { name: "OpenAI API", icon: "🤖" },
-  { name: "Git", icon: GitBranch },
-  { name: "Data Visualization", icon: BarChart3 },
-  { name: "Statistical & Financial Modeling", icon: TrendingUp },
+  { name: "Strategic Problem-Solving", icon: Target },
+  { name: "KPI & Performance Analysis", icon: BarChart3 },
+  { name: "Business Intelligence", icon: TrendingUp },
+  { name: "AI Strategy & Automation", icon: Brain },
+  { name: "LLM Applications & Agents", icon: Sparkles },
+  { name: "Forecasting & Anomaly Detection", icon: Search },
+  { name: "Process Optimization", icon: Settings },
+  { name: "Project Evaluation", icon: CheckCircle2 },
+  { name: "Stakeholder Management", icon: Handshake },
+  { name: "Cross-Functional Collaboration", icon: Users },
+  { name: "Executive Reporting", icon: Presentation },
+  { name: "UI/UX & Dashboard Development", icon: Code2 },
+  { name: "Python, SQL & R", icon: Database },
+  { name: "Financial & Impact Modeling", icon: TrendingUp },
+  { name: "API & ETL Development", icon: Zap },
+  { name: "Arabic & English — C2", icon: Languages },
 ];
 
-const INTERESTS = [
+const IMPACT = [
   {
-    icon: Trophy,
-    title: "Sports",
-    description: "I enjoy watching MMA, football, and tennis. There's something captivating about the strategy, athleticism, and dedication these sports require.",
-    color: "from-red-500 to-orange-500",
+    value: "75%",
+    label: "Operational cost reduction",
+    sublabel: "Delivered through an AI automation initiative",
   },
   {
-    icon: Book,
-    title: "Reading",
-    description: "I like reading books that expand my analytical thinking. Currently working through 'Thinking, Fast and Slow' by Kahneman and 'The Signal and the Noise' by Nate Silver.",
-    color: "from-blue-500 to-indigo-500",
+    value: "4+",
+    label: "Business domains",
+    sublabel: "Gaming, consulting, public sector, and sustainability",
+  },
+  {
+    value: "25K+",
+    label: "Medical images analyzed",
+    sublabel: "For a deep-learning classification project",
+  },
+  {
+    value: "83%",
+    label: "Detection precision achieved",
+    sublabel: "In automated coral-reef monitoring",
+  },
+  {
+    value: "284%",
+    label: "Portfolio return achieved",
+    sublabel: "Through collaborative market research and analysis",
+  },
+  {
+    value: "2",
+    label: "International career markets",
+    sublabel: "Professional focus across the Netherlands and GCC",
   },
 ];
 
-const EXPERIENCE = [
+
+type ExperienceItem = {
+  company: string;
+  location: string;
+  role: string;
+  period: string;
+  duration: string;
+  logo: string;
+  tags: string[];
+  bullets: string[];
+  thesisUrl?: string;
+  context?: string;
+};
+
+const EXPERIENCE: ExperienceItem[] = [
+  {
+    company: "Tencent Holdings Ltd.",
+    location: "Amsterdam, Netherlands",
+    role: "Data Science & Business Optimization Intern",
+    period: "Apr. 2026 – Present",
+    duration: "Current",
+    logo: "/tencent_logo.png",
+    tags: ["Gaming Analytics", "LLMs", "Forecasting", "Executive Reporting"],
+    bullets: [
+      "Deliver KPI and player-behavior analysis to executives across multiple countries for globally recognized titles including Clash of Clans, Brawl Stars, Delta Force, and Dune: Awakening, covering revenue, retention, engagement, and monetization.",
+      "Build executive dashboards, automated reports, and business presentations that make product performance easier to understand and support faster data-driven decisions.",
+      "Research and implement anomaly detection, forecasting, and LLM-powered analytics capabilities to improve internal AI tools and business-intelligence workflows across Tencent studios.",
+      "Translate complex analytical findings into practical recommendations while collaborating with analytics, data engineering, marketing, and product teams.",
+    ],
+  },
   {
     company: "VBTI Consultancy B.V.",
-    role: "AI Engineering and Business Optimization Intern",
-    period: "Feb 2025 – Aug 2025",
+    location: "Eindhoven, Netherlands",
+    role: "AI Engineering & Business Optimization Intern",
+    period: "Feb. 2025 – Aug. 2025",
     duration: "6 months",
-    thesisUrl: "/Daniel_Bsc_Thesis.pdf", 
+    logo: "/vbti_logo.jpg",
+    thesisUrl: "/Daniel_Bsc_Thesis.pdf",
+    tags: ["AI Transformation", "Cost Optimization", "Risk Assessment"],
     bullets: [
-      "Developed an automated pseudo-labeling pipeline that reduced manual annotation costs by up to 75% while maintaining competitive model performance, directly improving project profit margins.",
-      "Implemented iterative model retraining cycles that leveraged high-confidence predictions to expand training datasets, achieving 56.3% cost reduction in object detection and 75% in instance segmentation tasks.",
-      "Built and utilized machine learning models to enhance financial forecasting, risk assessment, and strategic investment decisions while optimizing management costs.",
+      "Built and deployed an AI-driven automation solution across multiple business units, contributing to a 75% reduction in operational costs and materially improving project profit margins.",
+      "Developed a pseudo-labeling workflow that reduced repetitive manual processes and created a more scalable model-development cycle.",
+      "Produced decision frameworks and risk assessments for senior management, connecting technical performance with financial and operational impact.",
+      "Facilitated stakeholder workshops with technical and business teams to identify optimization opportunities and support implementation.",
     ],
   },
   {
-    company: "Reef Support (via FruitPunch AI)",
-    role: "Environmental Strategy AI Consultant",
-    period: "Sept 2024 – Nov 2024",
+    company: "Reef Support, via FruitPunch AI",
+    location: "Eindhoven, Netherlands",
+    role: "Environmental AI Strategy Consultant",
+    period: "Sept. 2024 – Nov. 2024",
     duration: "3 months",
+    logo: "/tue_logo.png",
+    context: "University-sponsored consulting project",
+    tags: ["Computer Vision", "Sustainability", "Stakeholder Research"],
     bullets: [
-      "Developed a machine learning pipeline to improve monitoring of marine ecosystems with the aim of assessing the health of coral reefs by providing an estimate for the number of fish detected in an area.",
-      "Utilized RoboFlow for data labeling, annotation, and data augmentation to prepare a diverse dataset for model training.",
-      "Trained, tested, and validated a custom YOLOv8 model to detect and count fish in underwater videos and achieved a precision of 83% and an accuracy of 51%.",
+      "Developed an automated computer-vision system to monitor coral-reef health and reduce reliance on time-intensive manual assessment.",
+      "Coordinated with research teams, marine specialists, and environmental stakeholders to define operational problems and measurable success criteria.",
+      "Led development of a cost-effective monitoring framework that achieved 83% detection precision.",
+      "Translated technical findings into strategic recommendations for conservation organizations and future implementation planning.",
     ],
   },
   {
-    company: "London Metropolitan Police (MPS)",
-    role: "Public Sector Data Analyst",
-    period: "April 2024 – July 2024",
-    duration: "3 months",
+    company: "London Metropolitan Police Service",
+    location: "Eindhoven / London",
+    role: "Data Science & Public Strategy Analytics Project",
+    period: "Apr. 2024 – July 2024",
+    duration: "4 months",
+    logo: "/met_logo.png",
+    context: "University-sponsored client project",
+    tags: ["Public Strategy", "Random Forest", "Policy Analytics"],
     bullets: [
-      "Conducted research and statistical analysis on public trust in the Metropolitan Police Service across London boroughs using time series forecasting techniques and provided recommendations for improving community confidence.",
-      "Utilized Public Attitude Survey (PAS) and Use of Force (UoF) data to perform OLS regressions and time series analysis, identifying key factors influencing public perception over time.",
-      "Developed predictive models using random forest regression and ARIMA forecasting, achieving over 50% accuracy in forecasting quarterly trust trends. This methodology is transferable to supply chain demand forecasting.",
+      "Advised the Metropolitan Police Service on community-relations strategy by analyzing use-of-force cases and borough-level performance.",
+      "Built random-forest models to identify drivers of high-force incidents and translated model outputs into prioritized actions for resource allocation.",
+      "Developed a benchmarking framework that surfaced departmental improvement opportunities and supported strategic planning.",
+      "Managed collaboration across academic and government stakeholders, ensuring recommendations remained rigorous, actionable, and responsibly framed.",
     ],
   },
 ];
 
 const PROJECTS = [
   {
-    title: "Thoracic Disease Classifier",
-    subtitle: "AI for Medical Imaging",
-    period: "Feb 2024",
-    grade: "9/10",
-    highlights: [
-      "Fine-tuned CNNs like Res-Net50 & EfficientNet-B7 to classify thoracic diseases from 25,000+ chest X-rays in PyTorch with GPU acceleration"
-    ],
-    emoji: "🫁",
+    title: "LLM-Based Gaming Anomaly Detection",
+    period: "2026",
+    impact: "MSc thesis at the University of Amsterdam",
+    description:
+      "Designed and evaluated an AI-assisted anomaly-detection framework for gaming KPIs, combining forecasting, statistical detection, explainability, and LLM-based business analysis.",
+    thesisUrl: "/Daniel_Msc_Thesis.pdf",
   },
   {
-    title: "Financial Risk Analytics and Credit Intelligence Dashboard",
-    subtitle: "Python Risk Assessment Platform",
-    period: "Jan 2024", 
-    grade: "8/10",
-    highlights: [
-      "Developed comprehensive credit risk assessment platform using Python (Dash/Plotly), enabling real-time portfolio monitoring and strategic lending decisions for financial stakeholders"
-    ],
-    emoji: "💳",
+    title: "Financial Risk & Credit Intelligence Dashboard",
+    period: "2024",
+    impact: "Grade: 8/10",
+    description:
+      "Built an interactive Dash and Plotly platform for credit-risk assessment, portfolio monitoring, and strategic lending decisions.",
+  },
+  {
+    title: "Thoracic Disease Classifier",
+    period: "2024",
+    impact: "25,000+ X-rays · Grade: 9/10",
+    description:
+      "Fine-tuned ResNet50 and EfficientNet-B7 models in PyTorch to classify thoracic diseases using GPU-accelerated medical-image processing.",
   },
   {
     title: "Airline Customer Experience Analytics",
-    subtitle: "Twitter API Analysis",
-    period: "June 2023",
-    grade: "8/10",
-    highlights: [
-      "Built comprehensive social media analytics solution using Twitter API and NoSQL (MongoDB) to analyze customer sentiment patterns for major airlines (Lufthansa, American Airlines)"
-    ],
-    emoji: "✈️",
-  },
-  {
-    title: "Smart Compression Vest Development for Individuals with ASD",
-    subtitle: "IoT + Mobile App Integration",
-    period: "Nov 2023",
-    grade: "7/10", 
-    highlights: [
-      "Designed IoT-enabled wearable solution with a mobile app integration that creates personalized compression therapy for individuals with Autistic Spectrum Disorders"
-    ],
-    emoji: "🦺",
+    period: "2023",
+    impact: "NLP · MongoDB · Twitter API",
+    description:
+      "Built a sentiment-analysis pipeline to identify customer-experience patterns for Lufthansa and American Airlines and convert them into actionable insights.",
   },
 ];
 
 const EDUCATION = [
   {
     school: "University of Amsterdam",
-    program: "MSc Data Science & Business Analytics",
-    period: "2025 – 2026",
-    status: "Expected",
+    program: "MSc in Data Science and Business Analytics",
+    period: "Sept. 2025 – Aug. 2026",
+    location: "Amsterdam, Netherlands",
+    logo: null,
+    details:
+      "Focus on machine learning, optimization, deep learning, impact evaluation, explainable AI, and trustworthy analytics. Thesis on LLM-based anomaly detection and business intelligence for gaming analytics.",
   },
   {
     school: "Eindhoven University of Technology",
-    program: "BSc Data Science",
-    period: "2022 – 2025",
-    status: "Completed",
+    program: "BSc in Data Science · Grade: 7.5/10",
+    period: "Aug. 2022 – Aug. 2025",
+    location: "Eindhoven, Netherlands",
+    logo: "/tue_logo.png",
+    details:
+      "Coursework across analytics, econometrics, NLP, optimization, data management, and statistical computing. Bachelor thesis graded 8.5/10.",
+  },
+  {
+    school: "American International School of Jeddah",
+    program: "High School Diploma · High Honors · GPA: 3.9/4",
+    period: "2008 – 2022",
+    location: "Jeddah, Saudi Arabia",
+    logo: null,
+    details:
+      "International education with leadership activities in market analysis, investment research, and Model United Nations.",
   },
 ];
 
-// ---------- ANIMATION VARIANTS ----------
-const fadeUp = {
+const FOCUS_AREAS = [
+  "Strategic Decision Support",
+  "AI-Enabled Business Transformation",
+  "KPI & Corporate Performance Analytics",
+  "Project and Investment Evaluation",
+  "Executive Reporting & Communication",
+  "Data Product and Dashboard Development",
+];
+
+const fadeUp: MotionProps = {
   initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.3 },
-  transition: { duration: 0.5 },
+  viewport: { once: true, amount: 0.1 },
+  transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   initial: {},
-  whileInView: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-  viewport: { once: true, amount: 0.2 },
+  animate: { transition: { staggerChildren: 0.08 } },
 };
 
-const scaleIn = {
-  initial: { scale: 0.8, opacity: 0 },
-  whileInView: { scale: 1, opacity: 1 },
-  viewport: { once: true },
-  transition: { duration: 0.5 },
+type Skill = {
+  name: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
 };
 
-// ---------- COMPONENTS ----------
-function Marquee({ items }: { items: { name: string; icon: string | React.ComponentType<any> | null }[] }) {
+function Marquee({ items }: { items: Skill[] }) {
   return (
-    <div className="relative overflow-hidden py-6 w-full">
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10" />
+    <div className="relative w-full overflow-hidden py-6">
+      <div className="absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-white via-white/80 to-transparent md:w-32" />
+      <div className="absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-white via-white/80 to-transparent md:w-32" />
       <motion.div
-        className="flex gap-3 w-max"
-        animate={{ x: [-1000, 0] }}
-        transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+        className="flex w-max gap-3"
+        animate={{ x: [-1100, 0] }}
+        transition={{ repeat: Infinity, duration: 28, ease: "linear" }}
       >
-        {[...items, ...items, ...items].map((skill, i) => {
-          const IconComponent = typeof skill.icon === 'function' ? skill.icon : null;
+        {[...items, ...items, ...items].map((skill, index) => {
+          const Icon = skill.icon;
           return (
             <span
-              key={i}
-              className="px-4 py-2 rounded-full border border-indigo-200 text-sm font-medium shadow-sm bg-white hover:bg-indigo-50 transition-colors whitespace-nowrap flex items-center gap-2"
+              key={`${skill.name}-${index}`}
+              className="flex items-center gap-2 whitespace-nowrap rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-50"
             >
-              {IconComponent && <IconComponent size={16} className="text-indigo-600" />}
-              {typeof skill.icon === 'string' && <span className="text-base">{skill.icon}</span>}
+              <Icon size={16} className="text-blue-600" />
               {skill.name}
             </span>
           );
@@ -217,84 +292,52 @@ function Marquee({ items }: { items: { name: string; icon: string | React.Compon
   );
 }
 
-function Card({ 
-  children, 
-  className = "", 
-  hover = false 
-}: { 
-  children: React.ReactNode; 
-  className?: string;
-  hover?: boolean;
-}) {
+function Card({
+  children,
+  className = "",
+  hover = false,
+  ...props
+}: React.ComponentProps<typeof motion.div> & { hover?: boolean }) {
   return (
-    <motion.div 
-      className={`rounded-2xl border border-gray-200 shadow-sm bg-white p-6 ${
-        hover ? "hover:shadow-xl hover:border-indigo-300 hover:-translate-y-1 transition-all duration-300" : ""
+    <motion.div
+      className={`rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ${
+        hover
+          ? "transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl"
+          : ""
       } ${className}`}
+      whileHover={hover ? { y: -4 } : undefined}
+      {...props}
     >
       {children}
     </motion.div>
   );
 }
 
-function FloatingShape({ delay = 0 }: { delay?: number }) {
-  return (
-    <motion.div
-      className="absolute w-64 h-64 rounded-full bg-gradient-to-br from-indigo-200/30 to-purple-200/30 blur-3xl"
-      animate={{
-        x: [0, 100, 0],
-        y: [0, -100, 0],
-        scale: [1, 1.2, 1],
-      }}
-      transition={{
-        duration: 20,
-        repeat: Infinity,
-        delay: delay,
-        ease: "easeInOut",
-      }}
-    />
-  );
-}
-
-// ---------- PAGE ----------
 export default function Portfolio() {
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.82]);
+  const headerScale = useTransform(scrollYProgress, [0, 0.2], [1, 0.985]);
 
   return (
-    <div className="min-h-screen text-gray-900 bg-white relative overflow-hidden">
-      {/* Floating background shapes */}
-      <div className="fixed inset-0 pointer-events-none">
-        <FloatingShape delay={0} />
-        <FloatingShape delay={5} />
-      </div>
-
-      {/* NAV */}
-      <motion.nav 
-        className="sticky top-0 z-50 backdrop-blur-md bg-white/90 border-b border-gray-200"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-4xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-center gap-8 text-sm">
+    <div className="relative min-h-screen bg-white text-slate-800">
+      <nav className="sticky top-0 z-50 border-b border-blue-200/40 bg-white/95 backdrop-blur-md">
+        <div className="mx-auto max-w-5xl px-4 py-4 md:px-6">
+          <div className="flex items-center justify-start gap-5 overflow-x-auto text-sm md:justify-center md:gap-8">
             {[
               { href: "#experience", label: "Experience" },
               { href: "#education", label: "Education" },
               { href: "#projects", label: "Projects" },
               { href: META.linkedin, icon: Linkedin, label: "LinkedIn", external: true },
               { href: META.github, icon: Github, label: "GitHub", external: true },
-            ].map((link, i) => (
+              { href: META.resumeUrl, icon: FileText, label: "Resume", external: true },
+            ].map((link) => (
               <motion.a
-                key={i}
+                key={link.label}
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="inline-flex items-center gap-2 hover:text-indigo-600 transition-colors font-medium"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+                className="inline-flex shrink-0 items-center gap-2 font-medium text-slate-700 transition-colors hover:text-blue-700"
+                whileHover={{ y: -1 }}
               >
                 {link.icon && <link.icon size={16} />}
                 {link.label}
@@ -302,332 +345,358 @@ export default function Portfolio() {
             ))}
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* HERO - Smaller, more personal */}
-      <motion.header 
-        className="max-w-4xl mx-auto px-6 pt-12 pb-8 text-center relative"
-        style={{ opacity, scale }}
+      <motion.header
+        className="relative z-10 mx-auto max-w-5xl px-6 pb-12 pt-16"
+        style={{ opacity: headerOpacity, scale: headerScale }}
       >
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center gap-4"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="space-y-8 text-center"
         >
-          <motion.div 
-            className="flex items-center gap-2 text-sm text-gray-600"
-            whileHover={{ scale: 1.05 }}
-          >
-            <MapPin size={16} className="text-indigo-600" /> 
+          <div className="flex items-center justify-center gap-2 text-sm text-slate-600">
+            <MapPin size={16} />
             <span>{META.location}</span>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            className="mx-auto h-28 w-28 overflow-hidden rounded-2xl border-4 border-white bg-slate-100 shadow-lg ring-1 ring-slate-200"
+          >
+            <Image
+              src={META.photoUrl}
+              alt={`${META.name} portrait`}
+              width={112}
+              height={112}
+              priority
+              className="h-full w-full object-cover object-[center_28%]"
+            />
           </motion.div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-            <span className="bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent">
-              Hi, I'm {META.name} 👋
-            </span>
-          </h1>
-          
-          <p className="text-lg text-gray-600 max-w-xl">
-            {META.title}
-          </p>
-          
-          <div className="flex flex-wrap gap-3 justify-center">
-            <motion.a 
-              className="px-6 py-3 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl font-medium" 
+
+          <div className="space-y-4">
+            <h1 className="bg-gradient-to-r from-slate-900 via-blue-700 to-slate-900 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
+              {META.name}
+            </h1>
+            <h2 className="text-xl font-medium text-slate-700 md:text-2xl">{META.title}</h2>
+            <p className="mx-auto max-w-3xl text-base leading-relaxed text-slate-600 md:text-lg">
+              {META.valueProposition}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <motion.a
               href={`mailto:${META.email}`}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 font-medium text-white shadow-lg transition-all hover:from-blue-700 hover:to-indigo-700"
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <Mail size={20}/> Let's chat
+              <Mail size={18} /> Contact
             </motion.a>
-            <motion.a 
-              className="px-6 py-3 rounded-full border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 transition-all duration-300 inline-flex items-center gap-2 font-medium" 
+            <motion.a
               href={META.resumeUrl}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-blue-300 px-8 py-4 font-medium text-slate-800 transition-all hover:border-blue-400 hover:bg-blue-50"
+              whileHover={{ y: -1 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <FileText size={20}/> My Resume
+              <FileText size={18} /> Resume
             </motion.a>
           </div>
         </motion.div>
       </motion.header>
 
-      {/* Technical Skills Section */}
-      <section className="text-center py-8">
-        <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent">
-          Technical Skills
-        </h2>
-        <div className="w-full overflow-hidden bg-gradient-to-r from-gray-50 to-indigo-50/30">
-          <Marquee items={SKILLS} />
-        </div>
+      <section className="relative z-10 mb-16">
+        <motion.div {...fadeUp} className="mb-6 text-center">
+          <h2 className="mb-2 text-xl font-semibold text-slate-800">Core Competencies</h2>
+          <p className="text-sm text-slate-600">Business thinking supported by hands-on technical experience</p>
+        </motion.div>
+        <Marquee items={SKILLS} />
       </section>
 
-      <main className="max-w-4xl mx-auto px-6 pb-16 space-y-16 relative z-10">
-        {/* About Me Section */}
-        <section id="about">
-          <motion.div {...fadeUp} className="text-center mb-6">
-            <h2 className="text-3xl font-bold mb-3 inline-flex items-center gap-3">
-              <Sparkles className="text-indigo-600" size={28}/>
-              About Me
+      <main className="relative z-10 mx-auto max-w-5xl space-y-16 px-6 pb-16">
+        <section>
+          <motion.div {...fadeUp}>
+            <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-center text-3xl font-bold text-transparent">
+              Selected Impact
             </h2>
+            <motion.div
+              className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
+              {IMPACT.map((item, index) => (
+                <Card key={item.label} className="text-center" hover>
+                  <motion.div
+                    initial={{ scale: 0.85, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.04 }}
+                  >
+                    <div className="mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-800 bg-clip-text text-3xl font-bold text-transparent">
+                      {item.value}
+                    </div>
+                    <div className="mb-1 text-sm font-semibold text-slate-700">{item.label}</div>
+                    <div className="text-xs leading-relaxed text-slate-500">{item.sublabel}</div>
+                  </motion.div>
+                </Card>
+              ))}
+            </motion.div>
           </motion.div>
-          
-          <motion.div {...scaleIn}>
-            <Card className="bg-gradient-to-br from-indigo-50/50 to-purple-50/50 border-indigo-200">
-              <p className="text-gray-700 leading-relaxed text-center max-w-2xl mx-auto">
-                {META.about}
-              </p>
+        </section>
+
+        <section id="about">
+          <motion.div {...fadeUp}>
+            <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-3xl font-bold text-transparent">
+              A Little About Me
+            </h2>
+            <Card hover>
+              <p className="text-lg leading-relaxed text-slate-700">{META.about}</p>
             </Card>
           </motion.div>
         </section>
 
-        {/* Education - Now at top */}
-        <section id="education">
-          <motion.div {...fadeUp} className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-3 inline-flex items-center gap-3">
-              <BookOpen className="text-blue-600" size={28}/>
-              Education
+        <section>
+          <motion.div {...fadeUp}>
+            <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-3xl font-bold text-transparent">
+              Where I Create Value
             </h2>
-            <p className="text-gray-600">Where I learned the fundamentals</p>
-          </motion.div>
-          
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-6"
-          >
-            {EDUCATION.map((e, i) => (
-              <motion.div key={i} variants={fadeUp}>
-                <Card hover className="h-full group">
-                  <motion.div
-                    className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"
-                  >
-                    <BookOpen className="text-blue-600" size={24}/>
-                  </motion.div>
-                  <div className="font-bold text-xl mb-2">{e.school}</div>
-                  <div className="text-gray-700 mb-2">{e.program}</div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-blue-600 font-semibold">{e.period}</span>
-                    <span className="text-gray-500 italic">{e.status}</span>
-                  </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {FOCUS_AREAS.map((area) => (
+                <Card key={area} hover className="flex items-center gap-3 p-5">
+                  <Target size={20} className="shrink-0 text-blue-600" />
+                  <span className="font-medium text-slate-700">{area}</span>
                 </Card>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </motion.div>
         </section>
 
-        {/* Experience */}
-        <section id="experience">
-          <motion.div {...fadeUp} className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-3 inline-flex items-center gap-3">
-              <Briefcase className="text-indigo-600" size={28}/>
-              Experience
+        <section id="experience" className="scroll-mt-24">
+          <motion.div {...fadeUp}>
+            <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-3xl font-bold text-transparent">
+              Professional Experience
             </h2>
-            <p className="text-gray-600">Where I've been making things happen</p>
-          </motion.div>
-          
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
-            {EXPERIENCE.map((job, i) => (
-              <motion.div key={i} variants={fadeUp}>
-                <Card hover>
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
-                    <div>
-                      <div className="font-bold text-xl mb-1">{job.role}</div>
-                      <div className="text-gray-600">{job.company}</div>
+            <div className="space-y-8">
+              {EXPERIENCE.map((job, index) => (
+                <Card
+                  key={job.company}
+                  hover
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ delay: index * 0.05, duration: 0.5 }}
+                >
+                  <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-start">
+                    <div className="flex items-start gap-4">
+                      <motion.div
+                        className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-3"
+                        whileHover={{ scale: 1.05, rotate: 3 }}
+                      >
+                        <Image
+                          src={job.logo}
+                          alt={`${job.company} logo`}
+                          width={44}
+                          height={44}
+                          className="max-h-11 max-w-11 object-contain"
+                          unoptimized
+                        />
+                      </motion.div>
+                      <div>
+                        <h3 className="mb-1 text-xl font-bold text-slate-900">{job.role}</h3>
+                        <div className="text-lg font-medium text-blue-700">{job.company}</div>
+                        <div className="mt-1 text-sm text-slate-500">{job.location}</div>
+                        {job.context && (
+                          <div className="mt-2 text-xs italic text-slate-500">{job.context}</div>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-right mt-2 md:mt-0">
-                      <div className="text-sm text-indigo-600 font-semibold">{job.period}</div>
-                      <div className="text-xs text-gray-500">{job.duration}</div>
+                    <div className="md:text-right">
+                      <div className="text-sm font-medium text-slate-900">{job.period}</div>
+                      <div className="mt-1 inline-block rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600">
+                        {job.duration}
+                      </div>
                     </div>
                   </div>
-                  <ul className="space-y-2 text-sm text-gray-700 mt-4">
-                    {job.bullets.map((b, j) => (
-                      <motion.li 
-                        key={j} 
-                        className="flex gap-2"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: j * 0.1 }}
-                        viewport={{ once: true }}
+
+                  <div className="mb-5 flex flex-wrap gap-2">
+                    {job.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-slate-600"
                       >
-                        <ArrowRight size={16} className="text-indigo-600 mt-0.5 flex-shrink-0" />
-                        <span>{b}</span>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <ul className="space-y-3 text-slate-700">
+                    {job.bullets.map((bullet, bulletIndex) => (
+                      <motion.li
+                        key={bullet}
+                        className="flex gap-3"
+                        initial={{ opacity: 0, x: -15 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: bulletIndex * 0.04 }}
+                      >
+                        <ArrowRight size={16} className="mt-1 shrink-0 text-blue-500" />
+                        <span className="leading-relaxed">{bullet}</span>
                       </motion.li>
                     ))}
                   </ul>
+
                   {job.thesisUrl && (
-                    <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="mt-5 border-t border-slate-100 pt-5">
                       <a
                         href={job.thesisUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-lg hover:bg-indigo-100 hover:text-indigo-700 transition-colors"
+                        className="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100"
                       >
-                        <FileText size={16} />
-                        View Thesis
+                        <FileText size={16} /> View Bachelor Thesis
                       </a>
                     </div>
                   )}
                 </Card>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </motion.div>
         </section>
 
-        {/* Projects */}
-        <section id="projects">
-          <motion.div {...fadeUp} className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-3 inline-flex items-center gap-3">
-              <Cpu className="text-purple-600" size={28}/>
-              Projects
+        <section id="projects" className="scroll-mt-24">
+          <motion.div {...fadeUp}>
+            <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-3xl font-bold text-transparent">
+              Selected Projects & Business Impact
             </h2>
-            <p className="text-gray-600">Cool stuff I've built</p>
+            <Card hover>
+              <div className="space-y-8">
+                {PROJECTS.map((project, index) => (
+                  <motion.div
+                    key={project.title}
+                    className="border-b border-slate-100 pb-8 last:border-0 last:pb-0"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    whileHover={{ x: 6 }}
+                  >
+                    <div className="mb-3 flex flex-col justify-between gap-2 md:flex-row md:items-start">
+                      <h3 className="text-lg font-bold text-slate-900">{project.title}</h3>
+                      <div className="md:text-right">
+                        <div className="inline-block rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600">
+                          {project.period}
+                        </div>
+                        <div className="mt-1 text-sm font-medium text-indigo-700">{project.impact}</div>
+                      </div>
+                    </div>
+                    <p className="leading-relaxed text-slate-600">{project.description}</p>
+                    {project.thesisUrl && (
+                      <div className="mt-4">
+                        <a
+                          href={project.thesisUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100 hover:text-blue-800"
+                        >
+                          <FileText size={16} />
+                          View MSc Thesis
+                        </a>
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            </Card>
           </motion.div>
-          
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-6"
-          >
-            {PROJECTS.map((p, i) => (
-              <motion.div 
-                key={i} 
-                variants={fadeUp}
-                onMouseEnter={() => setHoveredProject(i)}
-                onMouseLeave={() => setHoveredProject(null)}
-              >
-                <Card hover className="h-full">
-                  <div className="flex justify-between items-start mb-3">
-                    <motion.div
-                      className="text-4xl"
-                      animate={{ 
-                        scale: hoveredProject === i ? 1.2 : 1,
-                        rotate: hoveredProject === i ? 10 : 0,
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {p.emoji}
-                    </motion.div>
-                    <div className="text-right">
-                      <div className="text-xs text-gray-500">{p.period}</div>
-                      <div className="text-sm font-semibold text-green-600">Grade: {p.grade}</div>
+        </section>
+
+        <section id="education" className="scroll-mt-24">
+          <motion.div {...fadeUp}>
+            <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-3xl font-bold text-transparent">
+              Education
+            </h2>
+            <div className="space-y-6">
+              {EDUCATION.map((education) => (
+                <Card key={education.school} hover>
+                  <div className="flex flex-col justify-between gap-5 md:flex-row md:items-start">
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-blue-200 bg-blue-50 p-2">
+                        {education.logo ? (
+                          <Image
+                            src={education.logo}
+                            alt={`${education.school} logo`}
+                            width={40}
+                            height={40}
+                            className="max-h-10 max-w-10 object-contain"
+                            unoptimized
+                          />
+                        ) : (
+                          <GraduationCap size={28} className="text-blue-600" />
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="mb-1 text-lg font-bold text-slate-900">{education.school}</h3>
+                        <div className="font-medium text-blue-700">{education.program}</div>
+                        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
+                          {education.details}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="shrink-0 md:text-right">
+                      <div className="text-sm font-medium text-slate-900">{education.period}</div>
+                      <div className="mt-1 inline-block rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-600">
+                        {education.location}
+                      </div>
                     </div>
                   </div>
-                  <div className="font-bold text-lg mb-2">{p.title}</div>
-                  <div className="text-sm text-gray-600 mb-4">{p.subtitle}</div>
-                  <ul className="space-y-2 text-sm text-gray-700">
-                    {p.highlights.map((h, j) => (
-                      <li key={j} className="flex gap-2">
-                        <span className="text-purple-600 mt-1">•</span>
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </Card>
-              </motion.div>
-            ))}
+              ))}
+            </div>
           </motion.div>
         </section>
 
-        {/* Interests - Now at the end */}
-        <section id="interests">
-          <motion.div {...fadeUp} className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-3 inline-flex items-center gap-3">
-              <Heart className="text-red-500" size={28}/>
-              What I'm Into
-            </h2>
-            <p className="text-gray-600">When I'm not wrangling data...</p>
-          </motion.div>
-          
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto"
-          >
-            {INTERESTS.map((interest, i) => (
-              <motion.div key={i} variants={fadeUp}>
-                <Card hover className="text-center h-full group">
-                  <motion.div
-                    className={`w-16 h-16 rounded-full bg-gradient-to-br ${interest.color} mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform`}
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <interest.icon className="text-white" size={32}/>
-                  </motion.div>
-                  <div className="font-bold text-lg mb-2">{interest.title}</div>
-                  <p className="text-sm text-gray-600">{interest.description}</p>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
-
-        {/* Contact */}
         <section id="contact">
-          <motion.div {...fadeUp} className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-3 inline-flex items-center gap-3">
-              <Globe className="text-green-600" size={28}/>
-              Get in Touch
-            </h2>
-            <p className="text-gray-600">Always open to interesting conversations</p>
-          </motion.div>
-          
           <motion.div {...fadeUp}>
-            <Card className="bg-gradient-to-br from-white to-indigo-50/30">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  {[
-                    { href: `mailto:${META.email}`, icon: Mail, label: META.email },
-                    { href: META.linkedin, icon: Linkedin, label: "LinkedIn", external: true },
-                  ].map((link, i) => (
-                    <motion.a
-                      key={i}
-                      className="flex items-center gap-3 text-gray-700 hover:text-indigo-600 transition-colors group"
-                      href={link.href}
-                      target={link.external ? "_blank" : undefined}
-                      rel={link.external ? "noopener noreferrer" : undefined}
-                      whileHover={{ x: 5 }}
-                    >
-                      <div className="p-2 rounded-lg bg-indigo-100 group-hover:bg-indigo-200 transition-colors">
-                        <link.icon size={20} className="text-indigo-600" />
-                      </div>
-                      <span className="font-medium">{link.label}</span>
-                    </motion.a>
-                  ))}
+            <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-3xl font-bold text-transparent">
+              Contact Information
+            </h2>
+            <Card hover>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-5">
+                  <a className="flex items-center gap-3 hover:text-blue-700" href={`mailto:${META.email}`}>
+                    <Mail size={20} className="text-blue-500" />
+                    <span className="font-medium">{META.email}</span>
+                  </a>
+                  <a
+                    className="flex items-center gap-3 hover:text-blue-700"
+                    href={META.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Linkedin size={20} className="text-blue-500" />
+                    <span className="font-medium">LinkedIn Profile</span>
+                  </a>
                 </div>
-                
-                <div className="space-y-4">
-                  <motion.a
-                    className="flex items-center gap-3 text-gray-700 hover:text-indigo-600 transition-colors group"
+                <div className="space-y-5">
+                  <a
+                    className="flex items-center gap-3 hover:text-blue-700"
                     href={META.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ x: 5 }}
                   >
-                    <div className="p-2 rounded-lg bg-indigo-100 group-hover:bg-indigo-200 transition-colors">
-                      <Github size={20} className="text-indigo-600" />
-                    </div>
-                    <span className="font-medium">GitHub</span>
-                  </motion.a>
-                  
-                  <div className="flex items-center gap-3 text-gray-700">
-                    <div className="p-2 rounded-lg bg-indigo-100">
-                      <MapPin size={20} className="text-indigo-600" />
-                    </div>
+                    <Github size={20} className="text-blue-500" />
+                    <span className="font-medium">GitHub Profile</span>
+                  </a>
+                  <div className="flex items-center gap-3">
+                    <MapPin size={20} className="text-blue-500" />
                     <span className="font-medium">{META.location}</span>
                   </div>
                 </div>
@@ -637,21 +706,13 @@ export default function Portfolio() {
         </section>
       </main>
 
-      <motion.footer 
-        className="border-t border-gray-200 bg-gray-50 py-8 mt-16"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-sm text-gray-600">
-            © {new Date().getFullYear()} {META.name}. Built with Next.js & Tailwind CSS.
-          </p>
-          <p className="mt-2 text-xs text-gray-500">
-            Made with ☕ and lots of iterations
+      <footer className="relative z-10 mt-16 border-t border-slate-200 bg-slate-50/50 py-8">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <p className="text-sm text-slate-500">
+            © {new Date().getFullYear()} {META.name}. Built with Next.js, TypeScript, and a lot of iteration.
           </p>
         </div>
-      </motion.footer>
+      </footer>
     </div>
   );
 }
