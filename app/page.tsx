@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, type MotionProps, type Variants } from "framer-motion";
+import { motion, useScroll, useTransform, type MotionProps } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
@@ -35,10 +35,10 @@ const META = {
   valueProposition:
     "Using data, AI, and business intelligence to turn complex problems into clearer decisions and measurable business impact.",
   about:
-    "I enjoy working where data, technology, and business decisions meet. Most of my work has involved taking something complex — a large dataset, an unclear KPI movement, a repetitive process, or a technical model — and making it easier for people to understand and use. I am currently working in gaming analytics and AI at Tencent, after previously building an AI automation solution at VBTI that reduced operational costs by 75%. Long term, I want to keep moving toward business strategy, transformation, project evaluation, and executive decision support while keeping the technical skills that let me understand how the solutions actually work.",
+    "I enjoy working where data, technology, and business decisions meet. Most of my work has involved taking something complex - a large dataset, an unclear KPI movement, a repetitive process, or a technical model - and making it easier for people to understand and use. I am currently working in gaming analytics and AI at Tencent, after previously building an AI automation solution at VBTI that reduced operational costs by 75%. Long term, I want to keep moving toward business strategy, transformation, project evaluation, and executive decision support while keeping the technical skills that let me understand how the solutions actually work.",
   email: "danielosman5@gmail.com",
   phone: "+31 644799364",
-  location: "Amsterdam, Netherlands — Jeddah, Saudi Arabia",
+  location: "Amsterdam, Netherlands - Jeddah, Saudi Arabia",
   linkedin: "https://www.linkedin.com/in/daniel-osman22",
   github: "https://github.com/Daniel5452",
   resumeUrl: "/Daniel-Resume.pdf",
@@ -61,40 +61,7 @@ const SKILLS = [
   { name: "Python, SQL & R", icon: Database },
   { name: "Financial & Impact Modeling", icon: TrendingUp },
   { name: "API & ETL Development", icon: Zap },
-  { name: "Arabic & English — C2", icon: Languages },
-];
-
-const IMPACT = [
-  {
-    value: "75%",
-    label: "Operational cost reduction",
-    sublabel: "Delivered through an AI automation initiative",
-  },
-  {
-    value: "4+",
-    label: "Business domains",
-    sublabel: "Gaming, consulting, public sector, and sustainability",
-  },
-  {
-    value: "25K+",
-    label: "Medical images analyzed",
-    sublabel: "For a deep-learning classification project",
-  },
-  {
-    value: "83%",
-    label: "Detection precision achieved",
-    sublabel: "In automated coral-reef monitoring",
-  },
-  {
-    value: "284%",
-    label: "Portfolio return achieved",
-    sublabel: "Through collaborative market research and analysis",
-  },
-  {
-    value: "2",
-    label: "International career markets",
-    sublabel: "Professional focus across the Netherlands and GCC",
-  },
+  { name: "Arabic & English - C2", icon: Languages },
 ];
 
 
@@ -116,9 +83,9 @@ const EXPERIENCE: ExperienceItem[] = [
     company: "Tencent Holdings Ltd.",
     location: "Amsterdam, Netherlands",
     role: "Data Science & Business Optimization Intern",
-    period: "Apr. 2026 – Present",
+    period: "Apr. 2026 - Present",
     duration: "Current",
-    logo: "/Tencent_logo.png",
+    logo: "/tencent_logo.png",
     tags: ["Gaming Analytics", "LLMs", "Forecasting", "Executive Reporting"],
     bullets: [
       "Deliver KPI and player-behavior analysis to executives across multiple countries for globally recognized titles including Clash of Clans, Brawl Stars, Delta Force, and Dune: Awakening, covering revenue, retention, engagement, and monetization.",
@@ -131,7 +98,7 @@ const EXPERIENCE: ExperienceItem[] = [
     company: "VBTI Consultancy B.V.",
     location: "Eindhoven, Netherlands",
     role: "AI Engineering & Business Optimization Intern",
-    period: "Feb. 2025 – Aug. 2025",
+    period: "Feb. 2025 - Aug. 2025",
     duration: "6 months",
     logo: "/vbti_logo.jpg",
     thesisUrl: "/Daniel_Bsc_Thesis.pdf",
@@ -147,7 +114,7 @@ const EXPERIENCE: ExperienceItem[] = [
     company: "Reef Support, via FruitPunch AI",
     location: "Eindhoven, Netherlands",
     role: "Environmental AI Strategy Consultant",
-    period: "Sept. 2024 – Nov. 2024",
+    period: "Sept. 2024 - Nov. 2024",
     duration: "3 months",
     logo: "/tue_logo.png",
     context: "University-sponsored consulting project",
@@ -163,7 +130,7 @@ const EXPERIENCE: ExperienceItem[] = [
     company: "London Metropolitan Police Service",
     location: "Eindhoven / London",
     role: "Data Science & Public Strategy Analytics Project",
-    period: "Apr. 2024 – July 2024",
+    period: "Apr. 2024 - July 2024",
     duration: "4 months",
     logo: "/met_logo.png",
     context: "University-sponsored client project",
@@ -213,16 +180,16 @@ const EDUCATION = [
   {
     school: "University of Amsterdam",
     program: "MSc in Data Science and Business Analytics",
-    period: "Sept. 2025 – Aug. 2026",
+    period: "Sept. 2025 - Aug. 2026",
     location: "Amsterdam, Netherlands",
-    logo: null,
+    logo: "/uva_logo.svg",
     details:
       "Focus on machine learning, optimization, deep learning, impact evaluation, explainable AI, and trustworthy analytics. Thesis on LLM-based anomaly detection and business intelligence for gaming analytics.",
   },
   {
     school: "Eindhoven University of Technology",
     program: "BSc in Data Science · Grade: 7.5/10",
-    period: "Aug. 2022 – Aug. 2025",
+    period: "Aug. 2022 - Aug. 2025",
     location: "Eindhoven, Netherlands",
     logo: "/tue_logo.png",
     details:
@@ -231,7 +198,7 @@ const EDUCATION = [
   {
     school: "American International School of Jeddah",
     program: "High School Diploma · High Honors · GPA: 3.9/4",
-    period: "2008 – 2022",
+    period: "2008 - 2022",
     location: "Jeddah, Saudi Arabia",
     logo: null,
     details:
@@ -253,11 +220,6 @@ const fadeUp: MotionProps = {
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.1 },
   transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-};
-
-const staggerContainer: Variants = {
-  initial: {},
-  animate: { transition: { staggerChildren: 0.08 } },
 };
 
 type Skill = {
@@ -420,38 +382,6 @@ export default function Portfolio() {
       </section>
 
       <main className="relative z-10 mx-auto max-w-5xl space-y-16 px-6 pb-16">
-        <section>
-          <motion.div {...fadeUp}>
-            <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-center text-3xl font-bold text-transparent">
-              Selected Impact
-            </h2>
-            <motion.div
-              className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-              variants={staggerContainer}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-            >
-              {IMPACT.map((item, index) => (
-                <Card key={item.label} className="text-center" hover>
-                  <motion.div
-                    initial={{ scale: 0.85, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.04 }}
-                  >
-                    <div className="mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-800 bg-clip-text text-3xl font-bold text-transparent">
-                      {item.value}
-                    </div>
-                    <div className="mb-1 text-sm font-semibold text-slate-700">{item.label}</div>
-                    <div className="text-xs leading-relaxed text-slate-500">{item.sublabel}</div>
-                  </motion.div>
-                </Card>
-              ))}
-            </motion.div>
-          </motion.div>
-        </section>
-
         <section id="about">
           <motion.div {...fadeUp}>
             <h2 className="mb-8 bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-3xl font-bold text-transparent">
