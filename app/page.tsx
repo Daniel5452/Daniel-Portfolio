@@ -182,7 +182,7 @@ const EDUCATION = [
     program: "MSc in Data Science and Business Analytics",
     period: "Sept. 2025 - Aug. 2026",
     location: "Amsterdam, Netherlands",
-    logo: "/uva_logo.svg",
+    logo: "/uva_logo.png",
     details:
       "Focus on machine learning, optimization, deep learning, impact evaluation, explainable AI, and trustworthy analytics. Thesis on LLM-based anomaly detection and business intelligence for gaming analytics.",
   },
