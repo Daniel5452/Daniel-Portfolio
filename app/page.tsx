@@ -132,7 +132,7 @@ const EXPERIENCE: ExperienceItem[] = [
     role: "Data Science & Public Strategy Analytics Project",
     period: "Apr. 2024 - July 2024",
     duration: "4 months",
-    logo: "/met_logo.png",
+    logo: "/met_logo.svg",
     context: "University-sponsored client project",
     tags: ["Public Strategy", "Random Forest", "Policy Analytics"],
     bullets: [
