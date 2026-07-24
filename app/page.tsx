@@ -200,7 +200,7 @@ const EDUCATION = [
     program: "High School Diploma · High Honors · GPA: 3.9/4",
     period: "2008 - 2022",
     location: "Jeddah, Saudi Arabia",
-    logo: null,
+    logo: "/aisj_logo.png",
     details:
       "International education with leadership activities in market analysis, investment research, and Model United Nations.",
   },
