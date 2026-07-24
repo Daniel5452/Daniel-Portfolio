@@ -85,7 +85,7 @@ const EXPERIENCE: ExperienceItem[] = [
     role: "Data Science & Business Optimization Intern",
     period: "Apr. 2026 - Present",
     duration: "Current",
-    logo: "/tencent_logo.png",
+    logo: "Tencent_logo.png",
     tags: ["Gaming Analytics", "LLMs", "Forecasting", "Executive Reporting"],
     bullets: [
       "Deliver KPI and player-behavior analysis to executives across multiple countries for globally recognized titles including Clash of Clans, Brawl Stars, Delta Force, and Dune: Awakening, covering revenue, retention, engagement, and monetization.",
